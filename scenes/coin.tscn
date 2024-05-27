@@ -1,0 +1,96 @@
+[gd_scene load_steps=14 format=3 uid="uid://cewh1c21m23gm"]
+
+[ext_resource type="Script" path="res://scripts/coin.gd" id="1_yl7xp"]
+[ext_resource type="Texture2D" uid="uid://73hi6h3fi0ac" path="res://assets/combat/coin-bkgd.webp" id="2_0214i"]
+[ext_resource type="Texture2D" uid="uid://b1wpk2ifmx57v" path="res://assets/characters/cloud.webp" id="3_whawb"]
+[ext_resource type="Script" path="res://components/move_component.gd" id="3_y8mts"]
+[ext_resource type="AudioStream" uid="uid://dt2opfvrca11p" path="res://sfx/coin_pickup.wav" id="4_khuyd"]
+[ext_resource type="Texture2D" uid="uid://cfoj6bykblnu3" path="res://assets/characters/karen.webp" id="4_ndl4w"]
+[ext_resource type="AudioStream" uid="uid://d0epvqjkfvs1n" path="res://sfx/incorrect.ogg" id="7_4tj3w"]
+
+[sub_resource type="Gradient" id="Gradient_84pf0"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gynfr"]
+gradient = SubResource("Gradient_84pf0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m2sow"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 57.55
+gravity = Vector3(0, 100, 0)
+scale_max = 4.0
+color_ramp = SubResource("GradientTexture1D_gynfr")
+
+[sub_resource type="Gradient" id="Gradient_gjprf"]
+offsets = PackedFloat32Array(0, 0.531792, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vdmdf"]
+gradient = SubResource("Gradient_gjprf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7i7qr"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 8.0
+scale_max = 16.0
+color_ramp = SubResource("GradientTexture1D_vdmdf")
+
+[node name="Coin" type="Node2D"]
+script = ExtResource("1_yl7xp")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, 130)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_m2sow")
+lifetime = 3.0
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -220.0
+offset_top = -217.0
+offset_right = 215.0
+offset_bottom = 218.0
+mouse_default_cursor_shape = 2
+
+[node name="CoinBackground" type="Sprite2D" parent="."]
+texture = ExtResource("2_0214i")
+
+[node name="Cloud" type="Sprite2D" parent="CoinBackground"]
+visible = false
+texture = ExtResource("3_whawb")
+
+[node name="Karen" type="Sprite2D" parent="CoinBackground"]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+texture = ExtResource("4_ndl4w")
+
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("3_y8mts")
+actor = NodePath("..")
+
+[node name="Explode" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_7i7qr")
+lifetime = 1.2
+one_shot = true
+preprocess = 0.5
+explosiveness = 1.0
+local_coords = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Correct" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_khuyd")
+volume_db = 4.0
+
+[node name="Incorrect" type="AudioStreamPlayer2D" parent="." groups=["coin"]]
+stream = ExtResource("7_4tj3w")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
