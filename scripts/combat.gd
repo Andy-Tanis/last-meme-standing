@@ -4,10 +4,7 @@ extends Node2D
 
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 
-@onready var progress_bar_win: ProgressBar = $ProgressBarWin
-@onready var progress_bar_lose: ProgressBar = $ProgressBarLose
-
-#signal game_over_signal
+signal game_over_signal
 
 
 var time_since_last_coin_spawn := 0
@@ -77,7 +74,7 @@ func update_progress_win_bar(coin_value, character) -> void:
 func win() -> void:
 	
 	game_over = true
-	#game_over_signal.emit()
+	game_over_signal.emit()
 	get_tree().call_group("coin", "speed_up")
 	$LabelYouWinLose.text = "You Won!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
@@ -86,7 +83,7 @@ func win() -> void:
 func lose() -> void:
 	
 	game_over = true
-	#game_over_signal.emit()
+	game_over_signal.emit()
 	$LabelYouWinLose.text = "You Lost!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
 	$Lose.play()

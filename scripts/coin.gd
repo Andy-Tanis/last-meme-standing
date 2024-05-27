@@ -13,7 +13,7 @@ func _ready() -> void:
 		queue_free()
 	)
 	
-	#get_tree().root.connect("game_over_signal", speed_up)
+	get_node("/root").connect("game_over_signal", speed_up)
 	
 	icon = [1, 2].pick_random()
 	
@@ -45,5 +45,4 @@ func _on_button_pressed() -> void:
 	tween.tween_callback(queue_free)
 
 func speed_up() -> void:
-	move_component.velocity.y *= 2
-	print("hello world")
+	move_component.velocity.y *= 4
