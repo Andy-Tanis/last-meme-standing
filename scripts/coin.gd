@@ -5,15 +5,12 @@ extends Node2D
 
 var icon: int
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
 	visible_on_screen_notifier_2d.screen_exited.connect(func():
 		await get_tree().create_timer(10.0).timeout
 		queue_free()
 	)
-	
-	get_node("/root").connect("game_over_signal", speed_up)
 	
 	icon = [1, 2].pick_random()
 	
@@ -24,12 +21,10 @@ func _ready() -> void:
 	
 	var rng = RandomNumberGenerator.new()
 	move_component.velocity.y = rng.randi_range(-50, -250)
-	scale = [Vector2(.2, .2), Vector2(.4, .4), Vector2(.6, .6), Vector2(.8, .8)].pick_random()
+	scale = [Vector2(.1, .1), Vector2(.2, .2), Vector2(.4, .4), Vector2(.6, .6), Vector2(.8, .8)].pick_random()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
 
 func _on_button_pressed() -> void:
 	
@@ -45,4 +40,4 @@ func _on_button_pressed() -> void:
 	tween.tween_callback(queue_free)
 
 func speed_up() -> void:
-	move_component.velocity.y *= 4
+	move_component.velocity.y *= 8

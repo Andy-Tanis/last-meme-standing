@@ -4,9 +4,6 @@ extends Node2D
 
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 
-signal game_over_signal
-
-
 var time_since_last_coin_spawn := 0
 
 var margin = 400
@@ -23,8 +20,6 @@ func _ready() -> void:
 	
 	$RoundStart.play()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
 	if !game_over:
@@ -59,22 +54,30 @@ func spawn_coin() -> void:
 	if new_node.icon == 1:
 		is_cloud = true
 		
-	new_node.find_child("Button").pressed.connect(update_progress_win_bar.bind(new_node.get("scale").x, is_cloud))
+	new_node.find_child("Button").pressed.connect(update_progress_win_bar.bind(new_node, new_node.get("scale").x, is_cloud))
 	
 	
-func update_progress_win_bar(coin_value, character) -> void:
+func update_progress_win_bar(new_node, scale, character) -> void:
 	$Camera2D.apply_shake()
+	var coin_value:float = 1 - scale
+	coin_value *= 20
+	var formatted_coin_value: int = int(coin_value)
+	
 	if character == true:
-		$UI/ProgressBarWin.value += coin_value * 15
-		$UI/ProgressBarLose.value -= coin_value * 15
+		new_node.find_child("Score").text = "+" + str(formatted_coin_value)
+		$UI/ProgressBarWin.value += formatted_coin_value
+		$UI/ProgressBarLose.value -= formatted_coin_value
 	else:
-		$UI/ProgressBarWin.value -= coin_value * 20
-		$UI/ProgressBarLose.value += coin_value * 20
+		new_node.find_child("Score").text = "-" + str(formatted_coin_value)
+		$UI/ProgressBarWin.value -= formatted_coin_value
+		$UI/ProgressBarLose.value += formatted_coin_value
+		
+	new_node.find_child("Score").add_theme_font_size_override("font_size", formatted_coin_value * 30)
+	new_node.find_child("Score").show()
 	
 func win() -> void:
 	
 	game_over = true
-	game_over_signal.emit()
 	get_tree().call_group("coin", "speed_up")
 	$LabelYouWinLose.text = "You Won!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
@@ -83,7 +86,7 @@ func win() -> void:
 func lose() -> void:
 	
 	game_over = true
-	game_over_signal.emit()
+	get_tree().call_group("coin", "speed_up")
 	$LabelYouWinLose.text = "You Lost!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
 	$Lose.play()
