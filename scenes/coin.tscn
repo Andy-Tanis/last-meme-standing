@@ -41,7 +41,7 @@ scale_min = 8.0
 scale_max = 16.0
 color_ramp = SubResource("GradientTexture1D_vdmdf")
 
-[node name="Coin" type="Node2D"]
+[node name="Coin" type="Node2D" groups=["coin"]]
 script = ExtResource("1_yl7xp")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
@@ -90,7 +90,18 @@ local_coords = true
 stream = ExtResource("4_khuyd")
 volume_db = 4.0
 
-[node name="Incorrect" type="AudioStreamPlayer2D" parent="." groups=["coin"]]
+[node name="Incorrect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_4tj3w")
+
+[node name="Score" type="Label" parent="."]
+visible = false
+offset_left = -219.0
+offset_top = -342.0
+offset_right = 207.0
+offset_bottom = -205.0
+theme_override_font_sizes/font_size = 100
+text = "+25"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
