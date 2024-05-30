@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch3wqnutskwb"]
+
+[ext_resource type="Texture2D" uid="uid://b1wpk2ifmx57v" path="res://assets/characters/cloud.webp" id="1_n3h6n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pt61q"]
+size = Vector2(319, 225)
+
+[node name="LawnItem" type="TextureRect"]
+texture = ExtResource("1_n3h6n")
+
+[node name="Area2D" type="Area2D" parent="." groups=["lawn_item"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(159.5, 111.5)
+shape = SubResource("RectangleShape2D_pt61q")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -9.0
+offset_top = 94.0
+offset_right = 333.0
+offset_bottom = 367.0
+theme_override_font_sizes/font_size = 200
+text = "+10"

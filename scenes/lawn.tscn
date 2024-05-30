@@ -1,12 +1,104 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmr821yqq384h"]
+[gd_scene load_steps=14 format=3 uid="uid://bmr821yqq384h"]
 
-[ext_resource type="Texture2D" uid="uid://b1wpk2ifmx57v" path="res://assets/characters/cloud.webp" id="1_aq0hv"]
 [ext_resource type="Script" path="res://scripts/lawn.gd" id="1_at88b"]
 [ext_resource type="Texture2D" uid="uid://cfoj6bykblnu3" path="res://assets/characters/karen.webp" id="2_qqjkf"]
+[ext_resource type="PackedScene" uid="uid://ch3wqnutskwb" path="res://scenes/lawn_item.tscn" id="3_a3kfy"]
 [ext_resource type="AudioStream" uid="uid://btswdr1uwkaew" path="res://sfx/lawnmower.ogg" id="5_pw6mi"]
+[ext_resource type="AudioStream" uid="uid://dt2opfvrca11p" path="res://sfx/coin_pickup.wav" id="5_sv3kv"]
+[ext_resource type="AudioStream" uid="uid://d0epvqjkfvs1n" path="res://sfx/incorrect.ogg" id="6_vgysc"]
+[ext_resource type="AudioStream" uid="uid://boxhyb140chdc" path="res://sfx/win.ogg" id="7_25v7d"]
+[ext_resource type="AudioStream" uid="uid://b46bsj2puuuan" path="res://sfx/lose.ogg" id="8_xafhl"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vljbn"]
 load_path = "res://.godot/imported/lawnmower.webp-9ad2d56687fc3ea462f0c77e095f0a60.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gjl7y"]
+size = Vector2(703.333, 298.333)
+
+[sub_resource type="Animation" id="Animation_d7ty7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(456, -328)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_8an6y"]
+resource_name = "show"
+length = 2.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.8, 2.4),
+"transitions": PackedFloat32Array(0.3, 1, 0.3, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 1.8, 2.4),
+"transitions": PackedFloat32Array(0.3, 1, 0.3, 1),
+"update": 0,
+"values": [Vector2(456, -328), Vector2(456, 360), Vector2(456, 360), Vector2(456, 1096)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p2ymp"]
+_data = {
+"RESET": SubResource("Animation_d7ty7"),
+"show": SubResource("Animation_8an6y")
+}
 
 [node name="Lawn" type="Node2D"]
 script = ExtResource("1_at88b")
@@ -28,54 +120,42 @@ theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 40
 columns = 4
 
-[node name="Sprite2D" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem1" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("1_aq0hv")
-expand_mode = 1
 
-[node name="Sprite2D2" type="TextureRect" parent="GridContainer"]
-layout_mode = 2
-texture = ExtResource("1_aq0hv")
-
-[node name="Sprite2D3" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem2" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
 texture = ExtResource("2_qqjkf")
 
-[node name="Sprite2D4" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem3" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("1_aq0hv")
 
-[node name="Sprite2D5" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem4" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("2_qqjkf")
 
-[node name="Sprite2D6" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem5" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("2_qqjkf")
 
-[node name="Sprite2D7" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem6" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("1_aq0hv")
 
-[node name="Sprite2D8" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem7" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("2_qqjkf")
 
-[node name="Sprite2D9" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem8" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("1_aq0hv")
 
-[node name="Sprite2D10" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem9" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("2_qqjkf")
 
-[node name="Sprite2D11" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem10" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("1_aq0hv")
 
-[node name="Sprite2D12" type="TextureRect" parent="GridContainer"]
+[node name="LawnItem11" parent="GridContainer" instance=ExtResource("3_a3kfy")]
 layout_mode = 2
-texture = ExtResource("1_aq0hv")
+
+[node name="LawnItem12" parent="GridContainer" instance=ExtResource("3_a3kfy")]
+layout_mode = 2
 
 [node name="ButtonMow1" type="Button" parent="."]
 offset_left = 233.0
@@ -110,9 +190,64 @@ position = Vector2(237, 270)
 scale = Vector2(0.6, 0.6)
 texture = SubResource("CompressedTexture2D_vljbn")
 
+[node name="Area2D" type="Area2D" parent="Lawnmower" groups=["lawnmower"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lawnmower/Area2D"]
+position = Vector2(-11.6667, 67.5)
+shape = SubResource("RectangleShape2D_gjl7y")
+
 [node name="AudioLawnmower" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_pw6mi")
+
+[node name="Correct" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_sv3kv")
+volume_db = 10.0
+
+[node name="Incorrect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_vgysc")
+volume_db = 6.0
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = 482.0
+offset_top = 956.0
+offset_right = 1502.0
+offset_bottom = 1016.0
+
+[node name="LabelYouWinLose" type="Label" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+top_level = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -504.0
+offset_top = -868.0
+offset_right = 511.0
+offset_bottom = -540.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 240
+text = "You Win!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LabelYouWinLose"]
+libraries = {
+"": SubResource("AnimationLibrary_p2ymp")
+}
+autoplay = "RESET"
+
+[node name="Win" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_25v7d")
+
+[node name="Lose" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_xafhl")
 
 [connection signal="pressed" from="ButtonMow1" to="." method="_on_button_mow_1_pressed"]
 [connection signal="pressed" from="ButtonMow2" to="." method="_on_button_mow_2_pressed"]
 [connection signal="pressed" from="ButtonMow3" to="." method="_on_button_mow_3_pressed"]
+[connection signal="area_entered" from="Lawnmower/Area2D" to="." method="_on_area_2d_area_entered"]
