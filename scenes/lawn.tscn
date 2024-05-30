@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmr821yqq384h"]
+[gd_scene load_steps=17 format=3 uid="uid://bmr821yqq384h"]
 
 [ext_resource type="Script" path="res://scripts/lawn.gd" id="1_at88b"]
 [ext_resource type="Texture2D" uid="uid://cfoj6bykblnu3" path="res://assets/characters/karen.webp" id="2_qqjkf"]
@@ -14,6 +14,19 @@ load_path = "res://.godot/imported/lawnmower.webp-9ad2d56687fc3ea462f0c77e095f0a
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gjl7y"]
 size = Vector2(703.333, 298.333)
+
+[sub_resource type="Gradient" id="Gradient_w4d6c"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vjllu"]
+gradient = SubResource("Gradient_w4d6c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_733y5"]
+particle_flag_disable_z = true
+gravity = Vector3(-100, 0, 0)
+scale_min = 5.0
+scale_max = 20.0
+color_ramp = SubResource("GradientTexture1D_vjllu")
 
 [sub_resource type="Animation" id="Animation_d7ty7"]
 length = 0.001
@@ -195,6 +208,12 @@ texture = SubResource("CompressedTexture2D_vljbn")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lawnmower/Area2D"]
 position = Vector2(-11.6667, 67.5)
 shape = SubResource("RectangleShape2D_gjl7y")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Lawnmower"]
+position = Vector2(-173.333, 198.333)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_733y5")
+lifetime = 0.2
 
 [node name="AudioLawnmower" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_pw6mi")
