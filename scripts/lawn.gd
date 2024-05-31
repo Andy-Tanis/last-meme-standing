@@ -14,7 +14,10 @@ func _ready() -> void:
 	for n in $GridContainer.get_children():
 		var character_to_use = [0, 1].pick_random()
 		n.texture = load("res://assets/characters/" + character[character_to_use] + ".webp")
-
+		
+	$Boomer/AnimationPlayer.play("show")
+	await get_tree().create_timer(.5).timeout
+	$Karen/AnimationPlayer.play("show")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -44,12 +47,36 @@ func _on_button_mow_1_pressed() -> void:
 	
 	lawnmower_spawned()
 	
-	$Lawnmower.position = Vector2(240, 270)
+	$Lawnmower.position = Vector2(240, 290)
 	
 	$Lawnmower.show()
 	
 	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property($Lawnmower, "position", Vector2(2200, 270), 2.5)
+	tween.tween_property($Lawnmower, "position", Vector2(2900, 290), 3.0)
+	tween.tween_callback(finished_mowing)
+
+func _on_button_mow_2_pressed() -> void:
+	
+	lawnmower_spawned()
+	
+	$Lawnmower.position = Vector2(240, 560)
+	
+	$Lawnmower.show()
+	
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($Lawnmower, "position", Vector2(2900, 560), 3.0)
+	tween.tween_callback(finished_mowing)
+	
+func _on_button_mow_3_pressed() -> void:
+	
+	lawnmower_spawned()
+	
+	$Lawnmower.position = Vector2(240, 820)
+	
+	$Lawnmower.show()
+	
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($Lawnmower, "position", Vector2(2900, 820), 3.0)
 	tween.tween_callback(finished_mowing)
 	
 func lawnmower_spawned() -> void:
@@ -62,40 +89,18 @@ func lawnmower_spawned() -> void:
 	$ButtonMow2.hide()
 	$ButtonMow3.hide()
 
-func _on_button_mow_2_pressed() -> void:
-	
-	lawnmower_spawned()
-	
-	$Lawnmower.position = Vector2(240, 570)
-	
-	$Lawnmower.show()
-	
-	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property($Lawnmower, "position", Vector2(2200, 570), 2.5)
-	tween.tween_callback(finished_mowing)
-	
-func _on_button_mow_3_pressed() -> void:
-	
-	lawnmower_spawned()
-	
-	$Lawnmower.position = Vector2(240, 840)
-	
-	$Lawnmower.show()
-	
-	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property($Lawnmower, "position", Vector2(2200, 840), 2.5)
-	tween.tween_callback(finished_mowing)
-
 func finished_mowing() -> void:
 	
-	rotate_items()
+	time_until_rotation = 200
 	
-	$Lawnmower.hide()
+	rotate_items()
 	
 	if !game_over:
 		$ButtonMow1.show()
 		$ButtonMow2.show()
 		$ButtonMow3.show()
+		
+	$Lawnmower.hide()
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
@@ -135,6 +140,8 @@ func rotate_items() -> void:
 func win() -> void:
 	
 	game_over = true
+	$Boomer/AnimationPlayer.play("win")
+	$Karen/AnimationPlayer.play("lose")
 	$LabelYouWinLose.text = "You Won!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
 	$Win.play()
@@ -144,6 +151,8 @@ func win() -> void:
 func lose() -> void:
 	
 	game_over = true
+	$Karen/AnimationPlayer.play("win")
+	$Boomer/AnimationPlayer.play("lose")
 	$LabelYouWinLose.text = "You Lost!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
 	$Lose.play()
