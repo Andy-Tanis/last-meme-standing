@@ -1,0 +1,114 @@
+[gd_scene load_steps=17 format=3 uid="uid://ckufdr8wfy63m"]
+
+[ext_resource type="Texture2D" uid="uid://cqif6hd3paj00" path="res://assets/characters/gigachad-head.webp" id="1_7pmr5"]
+[ext_resource type="Script" path="res://scripts/gym_icons.gd" id="1_g6qqi"]
+[ext_resource type="Texture2D" uid="uid://dm4w3nv5rl76k" path="res://assets/characters/gigachad-barbell.webp" id="3_o3aoo"]
+[ext_resource type="Texture2D" uid="uid://cgve0ehn41v53" path="res://assets/characters/gigachad-armcurl.webp" id="4_yb524"]
+[ext_resource type="Script" path="res://components/move_component.gd" id="5_gqlfo"]
+[ext_resource type="Texture2D" uid="uid://edwcl20fnq5s" path="res://assets/characters/karen-head.webp" id="5_i3k0y"]
+[ext_resource type="AudioStream" uid="uid://dt2opfvrca11p" path="res://sfx/coin_pickup.wav" id="6_c0coi"]
+[ext_resource type="Texture2D" uid="uid://b7khcnxf0uwxt" path="res://assets/characters/karen-call.webp" id="6_fxh0t"]
+[ext_resource type="Texture2D" uid="uid://diar7sv0rav51" path="res://assets/characters/karen-police.webp" id="7_0j6pw"]
+[ext_resource type="AudioStream" uid="uid://d0epvqjkfvs1n" path="res://sfx/incorrect.ogg" id="7_vrnvg"]
+
+[sub_resource type="Gradient" id="Gradient_84pf0"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gynfr"]
+gradient = SubResource("Gradient_84pf0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m2sow"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 57.55
+gravity = Vector3(0, -100, 0)
+scale_max = 4.0
+color_ramp = SubResource("GradientTexture1D_gynfr")
+
+[sub_resource type="Gradient" id="Gradient_gjprf"]
+offsets = PackedFloat32Array(0, 0.531792, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vdmdf"]
+gradient = SubResource("Gradient_gjprf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7i7qr"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, -400, 0)
+scale_min = 8.0
+scale_max = 16.0
+color_ramp = SubResource("GradientTexture1D_vdmdf")
+
+[node name="GymIcon" type="Node2D" groups=["gym_icon"]]
+script = ExtResource("1_g6qqi")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, -32)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_m2sow")
+lifetime = 3.0
+
+[node name="GigachadHead" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("1_7pmr5")
+
+[node name="GigachadBarbell" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_o3aoo")
+
+[node name="GigachadArmcurl" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_yb524")
+
+[node name="KarenHead" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("5_i3k0y")
+
+[node name="KarenCall" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+texture = ExtResource("6_fxh0t")
+
+[node name="KarenPolice" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+texture = ExtResource("7_0j6pw")
+
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("5_gqlfo")
+actor = NodePath("..")
+
+[node name="Explode" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_7i7qr")
+lifetime = 1.2
+one_shot = true
+preprocess = 0.5
+explosiveness = 1.0
+local_coords = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Correct" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_c0coi")
+volume_db = 4.0
+
+[node name="Incorrect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_vrnvg")
+
+[node name="Score" type="Label" parent="."]
+visible = false
+offset_left = -219.0
+offset_top = -342.0
+offset_right = 207.0
+offset_bottom = -205.0
+theme_override_font_sizes/font_size = 100
+text = "+25"
+horizontal_alignment = 1
+vertical_alignment = 1
