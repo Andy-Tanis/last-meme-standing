@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://cewh1c21m23gm"]
 
 [ext_resource type="Script" path="res://scripts/coin.gd" id="1_yl7xp"]
-[ext_resource type="Texture2D" uid="uid://73hi6h3fi0ac" path="res://assets/combat/coin-bkgd.webp" id="2_0214i"]
+[ext_resource type="Texture2D" uid="uid://73hi6h3fi0ac" path="res://assets/shop/coin-bkgd.webp" id="2_0214i"]
 [ext_resource type="Texture2D" uid="uid://b1wpk2ifmx57v" path="res://assets/characters/cloud.webp" id="3_whawb"]
 [ext_resource type="Script" path="res://components/move_component.gd" id="3_y8mts"]
 [ext_resource type="AudioStream" uid="uid://dt2opfvrca11p" path="res://sfx/coin_pickup.wav" id="4_khuyd"]
