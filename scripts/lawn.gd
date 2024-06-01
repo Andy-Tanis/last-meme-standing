@@ -47,7 +47,7 @@ func _on_button_mow_1_pressed() -> void:
 	
 	lawnmower_spawned()
 	
-	$Lawnmower.position = Vector2(240, 290)
+	$Lawnmower.position = Vector2(210, 290)
 	
 	$Lawnmower.show()
 	
@@ -59,7 +59,7 @@ func _on_button_mow_2_pressed() -> void:
 	
 	lawnmower_spawned()
 	
-	$Lawnmower.position = Vector2(240, 560)
+	$Lawnmower.position = Vector2(210, 560)
 	
 	$Lawnmower.show()
 	
@@ -71,7 +71,7 @@ func _on_button_mow_3_pressed() -> void:
 	
 	lawnmower_spawned()
 	
-	$Lawnmower.position = Vector2(240, 820)
+	$Lawnmower.position = Vector2(210, 820)
 	
 	$Lawnmower.show()
 	
