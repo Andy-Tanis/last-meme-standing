@@ -28,6 +28,8 @@ func _process(delta: float) -> void:
 
 func _on_button_pressed() -> void:
 	
+	$Button.hide()
+	
 	if icon == 1:
 		$Correct.play()
 	elif icon == 2:

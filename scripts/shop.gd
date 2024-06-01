@@ -81,6 +81,8 @@ func win() -> void:
 	get_tree().call_group("coin", "speed_up")
 	$LabelYouWinLose.text = "You Won!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
+	$Boomer/AnimationPlayer.play("win")
+	$Karen/AnimationPlayer.play("lose")
 	$Win.play()
 	
 func lose() -> void:
@@ -89,4 +91,6 @@ func lose() -> void:
 	get_tree().call_group("coin", "speed_up")
 	$LabelYouWinLose.text = "You Lost!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
+	$Boomer/AnimationPlayer.play("lose")
+	$Karen/AnimationPlayer.play("win")
 	$Lose.play()
