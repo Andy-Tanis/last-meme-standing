@@ -148,6 +148,10 @@ func win() -> void:
 	$GridContainer.hide()
 	$ProgressBar.hide()
 	
+	await $LabelYouWinLose/AnimationPlayer.animation_finished
+	
+	get_tree().change_scene_to_file("res://scenes/select.tscn")
+	
 func lose() -> void:
 	
 	game_over = true
@@ -158,3 +162,7 @@ func lose() -> void:
 	$Lose.play()
 	$GridContainer.hide()
 	$ProgressBar.hide()
+	
+	await $LabelYouWinLose/AnimationPlayer.animation_finished
+	
+	get_tree().change_scene_to_file("res://scenes/select.tscn")

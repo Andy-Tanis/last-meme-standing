@@ -59,6 +59,10 @@ func win() -> void:
 	$Karen/AnimationPlayer.play("lose")
 	$Win.play()
 	
+	await $LabelYouWinLose/AnimationPlayer.animation_finished
+	
+	get_tree().change_scene_to_file("res://scenes/select.tscn")
+	
 func lose() -> void:
 	
 	game_over = true
@@ -69,6 +73,10 @@ func lose() -> void:
 	$Gigachad/AnimationPlayer.play("lose")
 	$Karen/AnimationPlayer.play("win")
 	$Lose.play()
+	
+	await $LabelYouWinLose/AnimationPlayer.animation_finished
+	
+	get_tree().change_scene_to_file("res://scenes/select.tscn")
 
 
 func _on_button_pressed() -> void:
