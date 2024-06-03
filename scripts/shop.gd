@@ -19,6 +19,8 @@ func _ready() -> void:
 	
 	$RoundStart.play()
 	
+	$Intro/AnimationPlayer.play("show")
+	
 	$Boomer/AnimationPlayer.play("show")
 	await get_tree().create_timer(.5).timeout
 	$Karen/AnimationPlayer.play("show")
@@ -52,11 +54,11 @@ func _process(delta: float) -> void:
 func spawn_coin() -> void:
 	
 	var new_node = spawner_component.spawn(Vector2(randf_range(margin, screen_width - margin), screen_height + 150))
-	var is_cloud = false
-	if new_node.icon == 1:
-		is_cloud = true
+	var is_karen = false
+	if new_node.icon == 1 or new_node.icon == 2 or new_node.icon == 3:
+		is_karen = true
 		
-	new_node.find_child("Button").pressed.connect(update_progress_win_bar.bind(new_node, new_node.get("scale").x, is_cloud))
+	new_node.find_child("Button").pressed.connect(update_progress_win_bar.bind(new_node, new_node.get("scale").x, is_karen))
 	
 	
 func update_progress_win_bar(new_node, scale, character) -> void:
@@ -65,7 +67,7 @@ func update_progress_win_bar(new_node, scale, character) -> void:
 	coin_value *= 20
 	var formatted_coin_value: int = int(coin_value)
 	
-	if character == true:
+	if character == false:
 		new_node.find_child("Score").text = "+" + str(formatted_coin_value)
 		$UI/ProgressBarWin.value += formatted_coin_value
 	else:
@@ -78,11 +80,12 @@ func update_progress_win_bar(new_node, scale, character) -> void:
 func win() -> void:
 	
 	game_over = true
+	Global.karen_wins += 1
 	get_tree().call_group("coin", "speed_up")
 	$LabelYouWinLose.text = "You Won!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
-	$Boomer/AnimationPlayer.play("win")
-	$Karen/AnimationPlayer.play("lose")
+	$Boomer/AnimationPlayer.play("lose")
+	$Karen/AnimationPlayer.play("win")
 	$Win.play()
 	
 	await $LabelYouWinLose/AnimationPlayer.animation_finished
@@ -95,8 +98,8 @@ func lose() -> void:
 	get_tree().call_group("coin", "speed_up")
 	$LabelYouWinLose.text = "You Lost!"
 	$LabelYouWinLose/AnimationPlayer.play("show")
-	$Boomer/AnimationPlayer.play("lose")
-	$Karen/AnimationPlayer.play("win")
+	$Boomer/AnimationPlayer.play("win")
+	$Karen/AnimationPlayer.play("lose")
 	$Lose.play()
 	
 	await $LabelYouWinLose/AnimationPlayer.animation_finished

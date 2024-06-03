@@ -12,12 +12,20 @@ func _ready() -> void:
 		queue_free()
 	)
 	
-	icon = [1, 2].pick_random()
+	icon = [0, 1, 2, 3, 4, 5].pick_random()
 	
-	if icon == 1:
+	if icon == 0:
 		$CoinBackground/Cloud.show()
-	elif icon == 2:
+	elif icon == 1:
 		$CoinBackground/Karen.show()
+	elif icon == 2:
+		$CoinBackground/KarenCall.show()
+	elif icon == 3:
+		$CoinBackground/KarenPolice.show()
+	elif icon == 4:
+		$CoinBackground/Lawnmower.show()
+	elif icon == 5:
+		$CoinBackground/BoomerHead.show()
 	
 	var rng = RandomNumberGenerator.new()
 	move_component.velocity.y = rng.randi_range(-50, -250)
@@ -30,9 +38,9 @@ func _on_button_pressed() -> void:
 	
 	$Button.hide()
 	
-	if icon == 1:
+	if icon == 0 or icon == 4 or icon == 5:
 		$Correct.play()
-	elif icon == 2:
+	elif icon == 1 or icon == 2 or icon == 3:
 		$Incorrect.play()
 	
 	$GPUParticles2D.hide()

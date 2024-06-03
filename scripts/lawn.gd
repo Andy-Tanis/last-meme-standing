@@ -1,10 +1,10 @@
 extends Node2D
 
-var character = ["cloud", "karen"]
+var character = ["cloud", "karen-head", "boomer-head", "boomer-lawnmower", "karen-call", "karen-police"]
 
 var game_over := false
 
-var time_until_rotation := 200
+var time_until_rotation := 250
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,8 +12,12 @@ func _ready() -> void:
 	$ProgressBar.value = 50
 	
 	for n in $GridContainer.get_children():
-		var character_to_use = [0, 1].pick_random()
+		var character_to_use = [0, 1, 2, 3, 4].pick_random()
 		n.texture = load("res://assets/characters/" + character[character_to_use] + ".webp")
+		
+	$RoundStart.play()
+		
+	$Intro/AnimationPlayer.play("show")
 		
 	$Boomer/AnimationPlayer.play("show")
 	await get_tree().create_timer(.5).timeout
@@ -24,7 +28,7 @@ func _process(delta: float) -> void:
 	
 	if time_until_rotation <= 0:
 		rotate_items()
-		time_until_rotation = 200
+		time_until_rotation = 250
 	elif !game_over:
 		time_until_rotation -= 1
 	
@@ -32,7 +36,7 @@ func _process(delta: float) -> void:
 		
 		if $ProgressBar.value < 100 and $ProgressBar.value > 0:
 			
-			$ProgressBar.value -= 0.05
+			$ProgressBar.value -= 0.01
 				
 		elif $ProgressBar.value == 100:
 			
@@ -81,7 +85,7 @@ func _on_button_mow_3_pressed() -> void:
 	
 func lawnmower_spawned() -> void:
 	
-	time_until_rotation = 200
+	time_until_rotation = 250
 	
 	$AudioLawnmower.play()
 	
@@ -91,7 +95,7 @@ func lawnmower_spawned() -> void:
 
 func finished_mowing() -> void:
 	
-	time_until_rotation = 200
+	time_until_rotation = 250
 	
 	rotate_items()
 	
@@ -105,14 +109,14 @@ func finished_mowing() -> void:
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.is_in_group("lawn_item"):
-		if area.get_parent().get_texture().get_path().contains("cloud"):
-			$Correct.play()
-			area.get_parent().get_node("Label").text = "+10"
-			$ProgressBar.value += 10
-		elif area.get_parent().get_texture().get_path().contains("karen"):
+		if area.get_parent().get_texture().get_path().contains("cloud") or area.get_parent().get_texture().get_path().contains("boomer-head") or area.get_parent().get_texture().get_path().contains("boomer-lawnmower"):
 			$Incorrect.play()
 			area.get_parent().get_node("Label").text = "-10"
 			$ProgressBar.value -= 10
+		elif area.get_parent().get_texture().get_path().contains("karen-head") or area.get_parent().get_texture().get_path().contains("karen-police") or area.get_parent().get_texture().get_path().contains("karen-call"):
+			$Correct.play()
+			area.get_parent().get_node("Label").text = "+10"
+			$ProgressBar.value += 10
 			
 		area.get_parent().get_node("Label").show()
 			
@@ -131,7 +135,7 @@ func show_label(label_node) -> void:
 func rotate_items() -> void:
 	
 	for n in $GridContainer.get_children():
-		var character_to_use = [0, 1].pick_random()
+		var character_to_use = [0, 1, 2, 3, 4].pick_random()
 		var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 		tween.tween_property(n, "modulate", Color(1,1,1,0), .1)
 		tween.tween_property(n, "modulate", Color(1,1,1,1), 1)
@@ -140,6 +144,7 @@ func rotate_items() -> void:
 func win() -> void:
 	
 	game_over = true
+	Global.boomer_wins += 1
 	$Boomer/AnimationPlayer.play("win")
 	$Karen/AnimationPlayer.play("lose")
 	$LabelYouWinLose.text = "You Won!"

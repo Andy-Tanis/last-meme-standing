@@ -14,9 +14,14 @@ func _ready() -> void:
 	
 	$RoundStart.play()
 	
+	$Intro/AnimationPlayer.play("show")
+	
 	$Gigachad/AnimationPlayer.play("show")
 	await get_tree().create_timer(.5).timeout
 	$Karen/AnimationPlayer.play("show")
+	
+	await $Intro/AnimationPlayer.animation_finished
+	$UI/Button.show()
 
 func _process(delta: float) -> void:
 	
@@ -51,6 +56,7 @@ func spawn_icon() -> void:
 func win() -> void:
 	
 	game_over = true
+	Global.gigachad_wins += 1
 	$UI/Button.hide()
 	get_tree().call_group("gym_icon", "speed_up")
 	$LabelYouWinLose.text = "You Won!"
@@ -82,6 +88,7 @@ func lose() -> void:
 func _on_button_pressed() -> void:
 	
 	get_tree().call_group("gym_icon", "crush")
+	$Camera2D.apply_shake()
 	
 func gigachad_progress_increase() -> void:
 	
