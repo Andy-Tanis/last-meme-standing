@@ -1,17 +1,21 @@
-[gd_scene load_steps=14 format=3 uid="uid://cewh1c21m23gm"]
+[gd_scene load_steps=18 format=3 uid="uid://cewh1c21m23gm"]
 
 [ext_resource type="Script" path="res://scripts/coin.gd" id="1_yl7xp"]
 [ext_resource type="Texture2D" uid="uid://73hi6h3fi0ac" path="res://assets/shop/coin-bkgd.webp" id="2_0214i"]
 [ext_resource type="Texture2D" uid="uid://b1wpk2ifmx57v" path="res://assets/characters/cloud.webp" id="3_whawb"]
 [ext_resource type="Script" path="res://components/move_component.gd" id="3_y8mts"]
+[ext_resource type="Texture2D" uid="uid://edwcl20fnq5s" path="res://assets/characters/karen-head.webp" id="4_1k3no"]
 [ext_resource type="AudioStream" uid="uid://dt2opfvrca11p" path="res://sfx/coin_pickup.wav" id="4_khuyd"]
-[ext_resource type="Texture2D" uid="uid://cfoj6bykblnu3" path="res://assets/characters/karen.webp" id="4_ndl4w"]
+[ext_resource type="Texture2D" uid="uid://b7khcnxf0uwxt" path="res://assets/characters/karen-call.webp" id="5_l2lcs"]
+[ext_resource type="Texture2D" uid="uid://diar7sv0rav51" path="res://assets/characters/karen-police.webp" id="6_04o7a"]
 [ext_resource type="AudioStream" uid="uid://d0epvqjkfvs1n" path="res://sfx/incorrect.ogg" id="7_4tj3w"]
+[ext_resource type="Texture2D" uid="uid://du2ccwxnp3aoy" path="res://assets/characters/boomer-lawnmower.webp" id="7_rl6i2"]
+[ext_resource type="Texture2D" uid="uid://dcqtxifypmn5s" path="res://assets/characters/boomer-head.webp" id="8_omony"]
 
 [sub_resource type="Gradient" id="Gradient_84pf0"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_gynfr"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d1n0c"]
 gradient = SubResource("Gradient_84pf0")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m2sow"]
@@ -20,7 +24,7 @@ emission_shape = 1
 emission_sphere_radius = 57.55
 gravity = Vector3(0, 100, 0)
 scale_max = 4.0
-color_ramp = SubResource("GradientTexture1D_gynfr")
+color_ramp = SubResource("GradientTexture1D_d1n0c")
 
 [sub_resource type="Gradient" id="Gradient_gjprf"]
 offsets = PackedFloat32Array(0, 0.531792, 1)
@@ -68,7 +72,27 @@ texture = ExtResource("3_whawb")
 [node name="Karen" type="Sprite2D" parent="CoinBackground"]
 visible = false
 modulate = Color(1, 1, 1, 0.784314)
-texture = ExtResource("4_ndl4w")
+texture = ExtResource("4_1k3no")
+
+[node name="KarenCall" type="Sprite2D" parent="CoinBackground"]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+texture = ExtResource("5_l2lcs")
+
+[node name="KarenPolice" type="Sprite2D" parent="CoinBackground"]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+texture = ExtResource("6_04o7a")
+
+[node name="Lawnmower" type="Sprite2D" parent="CoinBackground"]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+texture = ExtResource("7_rl6i2")
+
+[node name="BoomerHead" type="Sprite2D" parent="CoinBackground"]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+texture = ExtResource("8_omony")
 
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("3_y8mts")
@@ -92,6 +116,7 @@ volume_db = 4.0
 
 [node name="Incorrect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_4tj3w")
+volume_db = -6.0
 
 [node name="Score" type="Label" parent="."]
 visible = false

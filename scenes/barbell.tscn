@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://cyfd2kwhiphlq"]
+
+[ext_resource type="Script" path="res://scripts/lawnmower.gd" id="1_r71l8"]
+[ext_resource type="Texture2D" uid="uid://dm4w3nv5rl76k" path="res://assets/characters/gigachad-barbell.webp" id="2_cijdj"]
+[ext_resource type="Script" path="res://components/move_component.gd" id="3_cjg4p"]
+
+[sub_resource type="Gradient" id="Gradient_cmt8w"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gynfr"]
+gradient = SubResource("Gradient_cmt8w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wty0u"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 57.55
+gravity = Vector3(0, -100, 0)
+scale_max = 4.0
+color_ramp = SubResource("GradientTexture1D_gynfr")
+
+[node name="Barbell" type="Node2D"]
+script = ExtResource("1_r71l8")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+position = Vector2(0, -24)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_wty0u")
+lifetime = 3.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+texture = ExtResource("2_cijdj")
+
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("3_cjg4p")
+actor = NodePath("..")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

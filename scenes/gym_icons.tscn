@@ -71,12 +71,10 @@ texture = ExtResource("5_i3k0y")
 
 [node name="KarenCall" type="Sprite2D" parent="."]
 visible = false
-modulate = Color(1, 1, 1, 0.784314)
 texture = ExtResource("6_fxh0t")
 
 [node name="KarenPolice" type="Sprite2D" parent="."]
 visible = false
-modulate = Color(1, 1, 1, 0.784314)
 texture = ExtResource("7_0j6pw")
 
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
@@ -101,6 +99,7 @@ volume_db = 4.0
 
 [node name="Incorrect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_vrnvg")
+volume_db = -6.0
 
 [node name="Score" type="Label" parent="."]
 visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bmr821yqq384h"]
+[gd_scene load_steps=39 format=3 uid="uid://bmr821yqq384h"]
 
 [ext_resource type="Script" path="res://scripts/lawn.gd" id="1_at88b"]
 [ext_resource type="Texture2D" uid="uid://dbviw4by23xsk" path="res://assets/lawn/lawn-background.webp" id="2_2b783"]
@@ -14,6 +14,8 @@
 [ext_resource type="AudioStream" uid="uid://b46bsj2puuuan" path="res://sfx/lose.ogg" id="8_xafhl"]
 [ext_resource type="Texture2D" uid="uid://cqvrch6wkqk88" path="res://assets/characters/boomer.webp" id="11_u5c5s"]
 [ext_resource type="Texture2D" uid="uid://c30b7c0wrpqnm" path="res://assets/characters/karen-portrait.webp" id="12_7lb6a"]
+[ext_resource type="FontFile" uid="uid://db5beuoi8jybh" path="res://assets/Bangers-Regular.ttf" id="15_p35jh"]
+[ext_resource type="AudioStream" uid="uid://b13jwyutusvac" path="res://sfx/round-start.ogg" id="16_jkngw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gjl7y"]
 size = Vector2(588.333, 216.667)
@@ -33,6 +35,12 @@ gravity = Vector3(-100, 0, 0)
 scale_min = 5.0
 scale_max = 20.0
 color_ramp = SubResource("GradientTexture1D_vjllu")
+
+[sub_resource type="LabelSettings" id="LabelSettings_cvhxe"]
+font = ExtResource("15_p35jh")
+font_size = 200
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_d7ty7"]
 length = 0.001
@@ -223,7 +231,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1, 2, 3),
 "transitions": PackedFloat32Array(0.2, 1, 0.2, 1),
 "update": 0,
-"values": [Vector2(2257, 564), Vector2(1601, 564), Vector2(1601, 543), Vector2(1794, 980)]
+"values": [Vector2(2257, 564), Vector2(1601, 564), Vector2(1601, 564), Vector2(1794, 980)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -427,6 +435,73 @@ _data = {
 "win": SubResource("Animation_jx0vr")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_3qunr"]
+font = ExtResource("15_p35jh")
+font_size = 100
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_8ld2k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ou4bw"]
+resource_name = "show"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 3.1, 4),
+"transitions": PackedFloat32Array(0.2, 1, 0.2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dq83q"]
+_data = {
+"RESET": SubResource("Animation_8ld2k"),
+"show": SubResource("Animation_ou4bw")
+}
+
 [node name="Lawn" type="Node2D"]
 script = ExtResource("1_at88b")
 
@@ -555,7 +630,7 @@ volume_db = 10.0
 
 [node name="Incorrect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_vgysc")
-volume_db = 6.0
+volume_db = -2.0
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 offset_left = 251.0
@@ -572,16 +647,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -504.0
-offset_top = -868.0
-offset_right = 511.0
-offset_bottom = -540.0
+offset_left = 456.0
+offset_top = -328.0
+offset_right = 1471.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 240
 text = "You Win!"
+label_settings = SubResource("LabelSettings_cvhxe")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -619,6 +694,27 @@ libraries = {
 "": SubResource("AnimationLibrary_g2ohe")
 }
 autoplay = "RESET"
+
+[node name="Intro" type="Label" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+offset_left = -20.0
+offset_top = 456.0
+offset_right = 1900.0
+offset_bottom = 564.0
+text = "Mow over your opponents icons!"
+label_settings = SubResource("LabelSettings_3qunr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Intro"]
+libraries = {
+"": SubResource("AnimationLibrary_dq83q")
+}
+autoplay = "RESET"
+
+[node name="RoundStart" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_jkngw")
 
 [connection signal="pressed" from="ButtonMow1" to="." method="_on_button_mow_1_pressed"]
 [connection signal="pressed" from="ButtonMow2" to="." method="_on_button_mow_2_pressed"]
